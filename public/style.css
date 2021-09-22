@@ -1,24 +1,137 @@
 body {
-  font-family: sans-serif;
-  margin: auto;
-  max-width: 1280px;
+  margin: 0;
 }
 
-.navbar {
-  background-color: #313236;
-  border-radius: 2px;
-  max-width: 800px;
+h1 {
+  margin: 0;
+  font-variant: small-caps;
 }
 
-.navbar a {
-  color: #aaa;
-  display: inline-block;
-  font-size: 15px;
-  padding: 10px;
-  text-decoration: none;
+#top {
+  color: #bfbdb6;
+  background-color: #222222;
+  height: 4em;
+
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.navbar a:hover {
-  color: #ffffff;
+#top a {
+  position: fixed;
+  right: 2em;
+  font-size: .8em;
 }
 
+#top a:visited {
+  color: #bfbdb6;
+}
+
+#content {
+  display: grid;
+  grid-template-areas:
+    "query query query query"
+    "input input output output";
+  gap: 1em;
+  grid-template-rows: auto 1fr;
+
+  padding: 1em;
+  height: 80vh;
+}
+
+textarea {
+  font-family: "Fira Code", monospace;
+  border: none;
+  border-radius: .3em;
+  padding: .5em;
+  background: #e8e8e8;
+
+  resize: none;
+}
+
+#content label {
+  font-size: 1.3em;
+  font-weight: bold;
+  height: 1.5em;
+}
+
+#query {
+  grid-area: query;
+
+  display: grid;
+  grid-template-areas:
+  "label"
+  "filter"
+  "options";
+}
+
+#filter-label {
+  grid-area: label;
+  font-weight: 400;
+}
+
+#filter {
+  grid-area: filter;
+  height: 2em;
+  font-size: 1.1em;
+
+  background: #e8e8e8;
+  border: none;
+  border-radius: .3em;
+  padding-left: .5em;
+}
+
+#options {
+  grid-area: options;
+
+  list-style-type: none;
+  display: flex;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  padding-left: .5em;
+}
+
+#options li {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 1em;
+  font-size: .7em;
+  font-weight: normal;
+}
+
+#input {
+  grid-area: input;
+
+  display: grid;
+  grid-template-areas:
+  "input-label"
+  "input-json";
+  grid-template-rows: auto 1fr;
+}
+
+#input-label {
+  grid-area: input-label;
+}
+
+#input-json {
+  grid-area: input-json;
+}
+
+#output {
+  grid-area: output;
+
+  display: grid;
+  grid-template-areas:
+  "output-label"
+  "output-json";
+  grid-template-rows: auto 1fr;
+}
+
+#output-label {
+  grid-area: output-label;
+}
+
+#output-json {
+  grid-area: output-json;
+}
