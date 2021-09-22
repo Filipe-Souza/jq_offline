@@ -1,23 +1,101 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+
+<head>
     <meta charset="utf-8">
-    <meta name="generator" content="GitLab Pages">
-    <title>Plain HTML site using GitLab Pages</title>
+    <title>Jq Play Offline</title>
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <div class="navbar">
-      <a href="https://pages.gitlab.io/plain-html/">Plain HTML Example</a>
-      <a href="https://gitlab.com/pages/plain-html/">Repository</a>
-      <a href="https://gitlab.com/pages/">Other Examples</a>
+<!--     <script defer src="https://cdn.biowasm.com/v2/aioli/latest/aioli.js"></script> -->
+    <script defer src="./js/aioli.js"></script>
+    <script defer type="module">
+      // let CLI = await new Aioli("jq/1.6");
+      let CLI = await new Aioli({
+            tool: "jq",
+            version: "1.6",
+            urlPrefix: "./wasm/",
+            loading: "eager",
+        }, {
+            urlAioli: "./js/aioli.worker.js",
+        });
+
+      async function jq() {
+        let data = document.getElementById("input-json").value;
+        let query = document.getElementById("filter").value;
+        let compactOutput = document.getElementById("compact-output").checked;
+        let sortKeys = document.getElementById("sort-keys").checked;
+
+        let options = ["--monochrome-output"];
+        if (compactOutput) {
+            options.push("--compact-output");
+        }
+        if (sortKeys) {
+            options.push("--sort-keys");
+        }
+
+        // Create mock JSON file
+        await CLI.fs.writeFile("test.json", data);
+
+        options.push(query);
+        options.push("test.json");
+
+        let output = await CLI.exec("jq", options);
+        document.getElementById("output-json").value = output;
+      }
+
+      // buffer and call the callback only after no activity for "interval": aka debounce
+      // This reduces load on the browser by avoiding jq evaluation while the user is typing
+      function debounce(callback, interval) {
+        let debounceTimeoutId;
+
+        return function(...args) {
+          clearTimeout(debounceTimeoutId);
+          debounceTimeoutId = setTimeout(() => callback.apply(this, args), interval);
+        };
+      }
+
+      let delayedJq = debounce(jq,  400);
+
+      document.getElementById("filter").addEventListener('input', delayedJq);
+      document.getElementById("input-json").addEventListener('input', delayedJq);
+      document.getElementById("compact-output").addEventListener('input', jq);
+      document.getElementById("sort-keys").addEventListener('input', jq);
+
+      // Call jq the first time without any changes
+      jq()
+    </script>
+</head>
+
+<body>
+    <div id="top">
+        <h1>Jq Play Offline</h1>
+        <a href="https://stedolan.github.io/jq/manual/v1.6/">1.6 - Web Assembly Version</a>
     </div>
+    <div id="content">
+        <div id="query">
+            <label id="filter-label" for="filter">Query</label>
+            <input id="filter" type="text" name="filter" />
+            <ul id="options">
+              <p>Options</p>
+              <li>
+                <input type="checkbox" id="compact-output" name="co">
+                <label for="co">Compact Output</label>
+              </li>
+              <li>
+                <input type="checkbox" id="sort-keys" name="sk">
+                <label for="sk">Sort Keys</label>
+              </li>
+            </ul>
+        </div>
+        <div id="input">
+            <label id="input-label" for="input-json">Input</label>
+            <textarea id="input-json" name="input" placeholder="Paste your input json here"></textarea>
+        </div>
 
-    <h1>Hello World!</h1>
+        <div id="output">
+            <label id="output-label" for="output-json">Result</label>
+            <textarea id="output-json">Output</textarea>
+        </div>
+    </div>
+</body>
 
-    <p>
-      This is a simple plain-HTML website on GitLab Pages, without any fancy static site generator.
-    </p>
-  </body>
 </html>
-
