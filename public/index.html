@@ -64,9 +64,12 @@
     <div id="content">
         <div id="query">
             <label id="filter-label" for="filter">Query</label>
-            <input id="filter" type="text" name="filter"
+            <input
+              id="filter"
+              type="text"
+              name="filter"
               autocapitalize="off"
-              autocomplete="off"
+              autocomplete="on"
               spellcheck="false"
               autocorrect="off"
             />
@@ -82,14 +85,27 @@
               </li>
             </ul>
         </div>
+
         <div id="input">
             <label id="input-label" for="input-json">Input</label>
-            <textarea id="input-json" name="input" placeholder="Paste your input json here"></textarea>
+            <textarea
+              id="input-json"
+              name="input"
+              placeholder="Paste your input json here"
+              autocapitalize="off"
+              autocomplete="off"
+              spellcheck="false"
+              autocorrect="off"
+            ></textarea>
         </div>
 
         <div id="output">
             <label id="output-label" for="output-json">Result</label>
-            <textarea id="output-json">Output</textarea>
+            <textarea
+              id="output-json"
+              placeholder="Output will appear here"
+              readonly
+            ></textarea>
         </div>
     </div>
 </body>
