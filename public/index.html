@@ -4,6 +4,24 @@
 <head>
     <meta charset="utf-8">
     <title>Jq Play Offline</title>
+    <script>
+      if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service_worker.js', { scope: '/' })
+          .then(function(registration) {
+                console.log('Service Worker Registered');
+          })
+          .catch(e => {
+            console.log('Unable to register service worker', e);
+          });
+
+        navigator.serviceWorker.ready.then(function(registration) {
+           console.log('Service Worker Ready');
+        })
+        .catch(e => {
+          console.log('Service worker unable to get ready', e);
+        });
+      }
+    </script>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.biowasm.com/v2/aioli/latest/aioli.js"></script>
     <script defer type="module">
