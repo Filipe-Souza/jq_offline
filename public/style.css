@@ -33,11 +33,11 @@ h1 {
 #content {
   display: grid;
   grid-template-areas:
-    "query"
     "input"
-    "output";
+    "output"
+    "query";
   gap: 1em;
-  grid-template-rows: auto 1fr 1fr;
+  grid-template-rows: 1fr 1fr auto;
 
   padding: 1em;
   height: 90vh;
@@ -131,6 +131,7 @@ textarea {
 input[type=checkbox] {
   transform: scale(2.5);
   height: 2.5em;
+  margin-right: 1em;
 }
 
 @media only screen and (min-width: 1000px) {
@@ -138,6 +139,7 @@ input[type=checkbox] {
   input[type=checkbox] {
     transform: scale(1.3);
     height: 1em;
+    margin-right: .5em;
   }
 }
 
