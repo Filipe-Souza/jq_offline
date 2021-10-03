@@ -6,7 +6,7 @@
     <title>Jq Play Offline</title>
     <script>
       if('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service_worker.js', { scope: '/' })
+        navigator.serviceWorker.register('/jq_offline/service_worker.js', { scope: '/jq_offline' })
           .then(function(registration) {
                 console.log('Service Worker Registered');
           })
